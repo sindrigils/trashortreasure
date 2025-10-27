@@ -1,159 +1,145 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { AwardCard } from '@/components/AwardCard';
 import { LikeHateBar } from '@/components/LikeHateBar';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-
-interface StatsData {
-  awards: {
-    most_loved: Array<{
-      candy: string;
-      likes: number;
-      hates: number;
-      net: number;
-    }>;
-    most_hated: Array<{
-      candy: string;
-      likes: number;
-      hates: number;
-      net: number;
-    }>;
-    spiciest_take: Array<{
-      name: string;
-      hate_vote: string;
-      spicy_score: number;
-    }>;
-    purest_heart: Array<{
-      name: string;
-      love_vote: string;
-      pure_score: number;
-    }>;
-  };
-  perCandy: Array<{
-    candy: string;
-    likes: number;
-    hates: number;
-    net: number;
-  }>;
-  perPerson: Array<{
-    name: string;
-    hate_vote: string;
-    love_vote: string;
-    spicy_score: number;
-    pure_score: number;
-  }>;
-}
+import { useStats } from '@/hooks/useStats';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Flame,
+  RefreshCcw,
+  Sparkles,
+} from 'lucide-react';
+import Link from 'next/link';
 
 export default function ResultsPage() {
-  const [stats, setStats] = useState<StatsData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
-
-  const fetchStats = async () => {
-    try {
-      const res = await fetch('/api/stats', { cache: 'no-store' });
-      if (!res.ok) {
-        throw new Error('Failed to fetch stats');
-      }
-      const data = await res.json();
-      setStats(data);
-      setLastUpdate(new Date());
-      setError(null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    // Initial fetch
-    fetchStats();
-
-    // Set up auto-refresh every 10 seconds
-    const interval = setInterval(fetchStats, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const { stats, loading, error, lastUpdate, refresh } = useStats();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-lg">Loading results...</p>
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 text-slate-300">
+        <div className="h-12 w-12 animate-spin rounded-full border-2 border-slate-700 border-t-emerald-400" />
+        <p>Loading the latest votes...</p>
       </div>
     );
   }
 
-  if (error) {
+  if (error || !stats) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-lg text-red-600">Error: {error}</p>
-          <button
-            onClick={fetchStats}
-            className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md"
-          >
-            Retry
-          </button>
-        </div>
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 text-center text-slate-300">
+        <p className="text-lg text-rose-300">Unable to load results: {error}</p>
+        <Button onClick={refresh} className="gap-2">
+          Retry
+          <RefreshCcw className="h-4 w-4" />
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background p-6 md:p-12">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-2">
-          <h1 className="text-4xl md:text-5xl font-bold">
-            Trash or Treasure 🍬
-          </h1>
-          <p className="text-muted-foreground">
-            Live results {lastUpdate && `• Last updated: ${lastUpdate.toLocaleTimeString()}`}
-          </p>
-        </div>
+    <div className="min-h-screen px-6 py-12 md:px-10">
+      <div className="mx-auto flex max-w-6xl flex-col gap-10">
+        <header className="space-y-8">
+          <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-300 md:flex-row">
+            <div className="flex items-center gap-3">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 text-slate-300 transition hover:text-white"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Home
+              </Link>
+              <span className="h-3 w-px bg-white/20" aria-hidden />
+              <Button
+                variant="ghost"
+                className="gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-widest text-emerald-200 hover:bg-white/10"
+                onClick={refresh}
+              >
+                Auto refresh • every 10s
+                <RefreshCcw className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+            <div className="flex gap-3">
+              <Link
+                href="/hater"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-amber-200 transition hover:bg-amber-500/20"
+              >
+                <Flame className="h-4 w-4" />
+                Hater
+              </Link>
+              <Link
+                href="/outlier"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-fuchsia-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-fuchsia-200 transition hover:bg-fuchsia-500/20"
+              >
+                <Sparkles className="h-4 w-4" />
+                Outlier
+              </Link>
+            </div>
+          </div>
 
-        <Separator />
+          <div className="space-y-4">
+            <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
+              Live results
+            </p>
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <h1 className="text-4xl font-bold text-white sm:text-5xl">
+                Candy Mood Board
+              </h1>
+              {lastUpdate && (
+                <p className="text-sm text-slate-300">
+                  Updated {lastUpdate.toLocaleTimeString()}
+                </p>
+              )}
+            </div>
+            <p className="max-w-3xl text-base text-slate-300 md:text-lg">
+              Track the sweet victories and dramatic takedowns in real time. The
+              chart below mirrors the pulse of the crowd—greens for love, roses
+              for the boos.
+            </p>
+          </div>
+        </header>
 
-        {/* Awards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section className="grid gap-6 md:grid-cols-2">
           <AwardCard
             title="Most Loved Candy"
             emoji="🏆"
-            winners={stats?.awards.most_loved || []}
-            delay={0}
+            winners={stats.awards.most_loved}
+            className="shadow-violet-900/30"
           />
           <AwardCard
             title="Most Hated Candy"
             emoji="💀"
-            winners={stats?.awards.most_hated || []}
+            winners={stats.awards.most_hated}
             delay={0.1}
+            className="shadow-rose-900/30"
           />
-          <AwardCard
-            title="Spiciest Take"
-            emoji="🔥"
-            winners={stats?.awards.spiciest_take || []}
-            delay={0.2}
-          />
-          <AwardCard
-            title="Purest Heart"
-            emoji="💖"
-            winners={stats?.awards.purest_heart || []}
-            delay={0.3}
-          />
-        </div>
+        </section>
 
-        {/* Chart */}
-        <LikeHateBar data={stats?.perCandy || []} />
+        <Separator className="border-white/10" />
 
-        {/* Total votes count */}
-        {stats && stats.perPerson.length > 0 && (
-          <p className="text-center text-muted-foreground">
-            Total votes: {stats.perPerson.length}
+        <section className="space-y-6">
+          <LikeHateBar data={stats.perCandy} />
+          {stats.perPerson.length > 0 && (
+            <p className="text-center text-sm uppercase tracking-[0.3em] text-slate-400">
+              Total votes logged: {stats.perPerson.length}
+            </p>
+          )}
+        </section>
+
+        <footer className="flex flex-col items-center justify-between gap-4 text-slate-400 md:flex-row">
+          <p className="text-xs uppercase tracking-[0.3em]">
+            Trash or Treasure Dashboard
           </p>
-        )}
+          <Link
+            href="/admin"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-200 transition hover:bg-white/10"
+          >
+            Admin Console
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </footer>
       </div>
     </div>
   );

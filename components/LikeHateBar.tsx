@@ -37,39 +37,39 @@ export function LikeHateBar({ data }: LikeHateBarProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
     >
-      <Card>
+      <Card className="bg-white/5 border-white/10 backdrop-blur-sm shadow-xl shadow-black/30">
         <CardHeader>
-          <CardTitle>Likes vs Hates</CardTitle>
+          <CardTitle className="text-white">Likes vs. Hates</CardTitle>
         </CardHeader>
         <CardContent>
           {data.length === 0 ? (
-            <p className="text-muted-foreground text-center py-8">No data yet</p>
+            <p className="text-slate-400 text-center py-8">No data yet</p>
           ) : (
             <ResponsiveContainer width="100%" height={320}>
               <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.15)" />
                 <XAxis
                   dataKey="candyShort"
                   angle={-45}
                   textAnchor="end"
                   height={100}
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 12, fill: '#cbd5f5' }}
                 />
-                <YAxis />
+                <YAxis tick={{ fill: '#cbd5f5' }} />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div className="bg-white border rounded-lg shadow-lg p-3">
-                          <p className="font-semibold">{data.candy}</p>
-                          <p className="text-sm text-green-600">
+                        <div className="rounded-lg border border-white/10 bg-slate-950/90 p-3 shadow-xl backdrop-blur">
+                          <p className="font-semibold text-white">{data.candy}</p>
+                          <p className="text-sm text-emerald-400">
                             Likes: {data.likes}
                           </p>
-                          <p className="text-sm text-red-600">
+                          <p className="text-sm text-rose-400">
                             Hates: {data.hates}
                           </p>
-                          <p className="text-sm font-medium">
+                          <p className="text-sm font-medium text-slate-200">
                             Net: {data.net > 0 ? '+' : ''}{data.net}
                           </p>
                         </div>
@@ -78,9 +78,22 @@ export function LikeHateBar({ data }: LikeHateBarProps) {
                     return null;
                   }}
                 />
-                <Legend />
-                <Bar dataKey="likes" fill="#22c55e" name="Likes" />
-                <Bar dataKey="hates" fill="#ef4444" name="Hates" />
+                <Legend
+                  wrapperStyle={{ color: '#cbd5f5' }}
+                  iconType="circle"
+                />
+                <Bar dataKey="likes" fill="url(#likesGradient)" name="Likes" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="hates" fill="url(#hatesGradient)" name="Hates" radius={[8, 8, 0, 0]} />
+                <defs>
+                  <linearGradient id="likesGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#34d399" />
+                    <stop offset="100%" stopColor="#0f766e" />
+                  </linearGradient>
+                  <linearGradient id="hatesGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#fb7185" />
+                    <stop offset="100%" stopColor="#be123c" />
+                  </linearGradient>
+                </defs>
               </BarChart>
             </ResponsiveContainer>
           )}
