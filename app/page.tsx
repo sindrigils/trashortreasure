@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, BarChart3, Flame, ShieldCheck, Sparkles } from 'lucide-react'
+import { ArrowRight, BarChart3, Flame, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -23,21 +23,10 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-col items-center gap-4 sm:flex-row md:justify-start">
-            <Button asChild size="lg" className="gap-2">
-              <Link href="/results">
+            <Button asChild size="lg">
+              <Link href="/results" className="flex items-center gap-2">
                 View Live Results
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-white/30 bg-white/5 text-slate-100 backdrop-blur transition hover:border-white/50 hover:bg-white/10"
-            >
-              <Link href="/admin">
-                Admin Console
-                <ShieldCheck className="ml-2 h-4 w-4" />
+                <ArrowRight className="h-4 w-4 shrink-0" />
               </Link>
             </Button>
           </div>
@@ -56,11 +45,11 @@ export default function Home() {
               <Button
                 asChild
                 variant="ghost"
-                className="w-full justify-between bg-white/5 text-slate-100 hover:bg-white/10"
+                className="w-full bg-white/5 text-slate-100 hover:bg-white/10"
               >
-                <Link href="/results">
+                <Link href="/results" className="flex items-center justify-between gap-2">
                   Explore results
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 shrink-0" />
                 </Link>
               </Button>
             </CardContent>
@@ -79,21 +68,21 @@ export default function Home() {
                 <Button
                   asChild
                   variant="ghost"
-                  className="justify-between bg-white/5 text-slate-100 hover:bg-white/10"
+                  className="bg-white/5 text-slate-100 hover:bg-white/10"
                 >
-                  <Link href="/hater">
+                  <Link href="/hater" className="flex items-center justify-between gap-2">
                     Hater
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4 shrink-0" />
                   </Link>
                 </Button>
                 <Button
                   asChild
                   variant="ghost"
-                  className="justify-between bg-white/5 text-slate-100 hover:bg-white/10"
+                  className="bg-white/5 text-slate-100 hover:bg-white/10"
                 >
-                  <Link href="/outlier">
+                  <Link href="/outlier" className="flex items-center justify-between gap-2">
                     Outlier
-                    <Sparkles className="h-4 w-4" />
+                    <Sparkles className="h-4 w-4 shrink-0" />
                   </Link>
                 </Button>
               </div>

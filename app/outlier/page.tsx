@@ -54,7 +54,7 @@ export default function OutlierPage() {
             </Link>
             {lastUpdate && (
               <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
-                Updated {lastUpdate.toLocaleTimeString()} • auto every 15s
+                Updated {lastUpdate.toLocaleTimeString()}
               </p>
             )}
           </div>
@@ -67,9 +67,6 @@ export default function OutlierPage() {
             <h1 className="text-4xl font-bold text-white sm:text-5xl">
               Candy Outlier Roll
             </h1>
-            <p className="text-base text-slate-300 md:text-lg">
-              These sweet-tooth rebels hype treats that everyone else trashes. A higher Outlier Score means their favorite candy faces more boos than cheers.
-            </p>
           </div>
         </header>
 
@@ -123,11 +120,11 @@ export default function OutlierPage() {
               <Button
                 asChild
                 variant="ghost"
-                className="w-full justify-between rounded-full border border-white/10 bg-white/5 px-6 py-3 text-slate-100 hover:bg-white/10"
+                className="w-full rounded-full border border-white/10 bg-white/5 px-6 py-3 text-slate-100 hover:bg-white/10"
               >
-                <Link href="/results">
+                <Link href="/results" className="flex items-center justify-between gap-2">
                   Return to the main board
-                  <Heart className="h-4 w-4" />
+                  <Heart className="h-4 w-4 shrink-0" />
                 </Link>
               </Button>
             </CardContent>

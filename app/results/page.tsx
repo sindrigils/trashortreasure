@@ -7,7 +7,6 @@ import { Separator } from '@/components/ui/separator';
 import { useStats } from '@/hooks/useStats';
 import {
   ArrowLeft,
-  ArrowRight,
   Flame,
   RefreshCcw,
   Sparkles,
@@ -128,17 +127,10 @@ export default function ResultsPage() {
           )}
         </section>
 
-        <footer className="flex flex-col items-center justify-between gap-4 text-slate-400 md:flex-row">
+        <footer className="flex flex-col items-center justify-center gap-4 text-slate-400">
           <p className="text-xs uppercase tracking-[0.3em]">
             Trash or Treasure Dashboard
           </p>
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-200 transition hover:bg-white/10"
-          >
-            Admin Console
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
         </footer>
       </div>
     </div>
