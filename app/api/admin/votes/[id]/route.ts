@@ -4,10 +4,11 @@ import { getSupabaseServiceClient } from '@/lib/supabase';
 // PUT /api/admin/votes/[id] - Update a single vote
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = parseInt(params.id);
+    const { id: idParam } = await params;
+    const id = parseInt(idParam);
     if (isNaN(id)) {
       return NextResponse.json(
         { error: 'Invalid vote ID' },
@@ -75,10 +76,11 @@ export async function PUT(
 // DELETE /api/admin/votes/[id] - Delete a single vote
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = parseInt(params.id);
+    const { id: idParam } = await params;
+    const id = parseInt(idParam);
     if (isNaN(id)) {
       return NextResponse.json(
         { error: 'Invalid vote ID' },
