@@ -89,12 +89,12 @@ export default function OutlierPage() {
             <CardContent className="space-y-6 pt-6">
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="rounded-xl border border-white/10 bg-black/30 p-5">
-                  <p className="text-xs uppercase tracking-[0.3em] text-fuchsia-200">Their chosen candy</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-emerald-200">Their Like</p>
                   <h2 className="mt-3 text-xl font-semibold text-white">
                     {headliner.love_vote}
                   </h2>
-                  <p className="mt-2 text-sm text-slate-300">
-                    Cheering for the underdog candy without hesitation.
+                  <p className="mt-2 text-sm text-slate-400">
+                    (that others hate)
                   </p>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-black/30 p-5">
@@ -157,7 +157,7 @@ export default function OutlierPage() {
                         </Badge>
                       </div>
                       <p className="text-sm text-slate-300">
-                        Standing by <span className="font-semibold text-white">{entry.love_vote}</span> no matter the groans.
+                        Likes: <span className="font-semibold text-white">{entry.love_vote}</span>
                       </p>
                       {candy && (
                         <p className="text-xs text-slate-400">

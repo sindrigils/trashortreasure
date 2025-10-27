@@ -89,12 +89,12 @@ export default function HaterPage() {
             <CardContent className="space-y-6 pt-6">
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="rounded-xl border border-white/10 bg-black/30 p-5">
-                  <p className="text-xs uppercase tracking-[0.3em] text-amber-200">Their hot take</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-rose-200">Their Hate</p>
                   <h2 className="mt-3 text-xl font-semibold text-white">
                     {headliner.hate_vote}
                   </h2>
-                  <p className="mt-2 text-sm text-slate-300">
-                    Blasting a crowd favorite without blinking.
+                  <p className="mt-2 text-sm text-slate-400">
+                    (that others like)
                   </p>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-black/30 p-5">
@@ -157,7 +157,7 @@ export default function HaterPage() {
                         </Badge>
                       </div>
                       <p className="text-sm text-slate-300">
-                        Throwing shade at <span className="font-semibold text-white">{entry.hate_vote}</span>.
+                        Hates: <span className="font-semibold text-white">{entry.hate_vote}</span>
                       </p>
                       {candy && (
                         <p className="text-xs text-slate-400">
