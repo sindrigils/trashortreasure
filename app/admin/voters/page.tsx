@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, RefreshCcw, CheckCircle2, XCircle } from 'lucide-react';
 import { Vote } from '@/lib/supabase';
-import { getAllVoters } from '@/lib/getAvatarUrl';
+import { getAllVoters, namesMatch } from '@/lib/getAvatarUrl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -39,8 +39,8 @@ export default function VotersPage() {
       // Map voters to their status
       const votersWithStatus: VoterWithStatus[] = allVoters.map((voter) => {
         const vote = votes.find((v) => {
-          // Case-insensitive comparison
-          return v.voter_name.toLowerCase() === voter.name.toLowerCase();
+          // Use the same smart matching as getAvatarUrl
+          return namesMatch(v.voter_name, voter.name);
         });
 
         return {

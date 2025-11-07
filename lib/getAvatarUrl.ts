@@ -21,6 +21,28 @@ function getFirstName(name: string): string {
 }
 
 /**
+ * Check if two names match using the same logic as getAvatarUrl
+ * Handles first names, case-insensitivity, and accents
+ */
+export function namesMatch(name1: string, name2: string): boolean {
+  const firstName1 = getFirstName(name1);
+  const firstName2 = getFirstName(name2);
+
+  // Try exact match
+  if (firstName1 === firstName2) {
+    return true;
+  }
+
+  // Try case-insensitive match
+  if (firstName1.toLowerCase() === firstName2.toLowerCase()) {
+    return true;
+  }
+
+  // Try slugified match
+  return slugifyName(firstName1) === slugifyName(firstName2);
+}
+
+/**
  * Get the avatar URL for a given voter name
  * Falls back to placeholder if no avatar is found
  */

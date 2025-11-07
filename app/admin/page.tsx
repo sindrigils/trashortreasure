@@ -93,21 +93,21 @@ export default function AdminPage() {
               <Button
                 asChild
                 variant="ghost"
-                className="gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-white hover:bg-white/10"
+                className="gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-white hover:bg-white/10 whitespace-nowrap"
               >
-                <Link href="/admin/voters">
+                <Link href="/admin/voters" className="flex items-center gap-2">
                   Voter Status
-                  <Users className="h-4 w-4" />
+                  <Users className="h-4 w-4 shrink-0" />
                 </Link>
               </Button>
               <Button
                 asChild
                 variant="ghost"
-                className="gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-white hover:bg-white/10"
+                className="gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-white hover:bg-white/10 whitespace-nowrap"
               >
-                <Link href="/results">
+                <Link href="/results" className="flex items-center gap-2">
                   View live board
-                  <BarChart3 className="h-4 w-4" />
+                  <BarChart3 className="h-4 w-4 shrink-0" />
                 </Link>
               </Button>
             </div>
