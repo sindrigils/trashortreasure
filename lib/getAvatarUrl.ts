@@ -1,6 +1,6 @@
 import avatarMapping from './avatars.json';
 
-const PLACEHOLDER_AVATAR = '/avatars/placeholder.png';
+const PLACEHOLDER_AVATAR = '/avatars/biscoff.png';
 
 /**
  * Normalize a name by removing accents, converting to lowercase, and removing special characters
