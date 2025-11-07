@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Vote } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getAvatarUrl } from '@/lib/getAvatarUrl';
 
 interface AdminVotesTableProps {
   votes: Vote[];
@@ -177,6 +179,7 @@ export default function AdminVotesTable({ votes, onVotesChange }: AdminVotesTabl
           <thead className="bg-muted/50">
             <tr>
               <th className="px-4 py-3 text-left font-medium text-muted-foreground w-16">ID</th>
+              <th className="px-4 py-3 text-left font-medium text-muted-foreground w-16">Avatar</th>
               <th className="px-4 py-3 text-left font-medium text-muted-foreground w-32">Created At</th>
               <th className="px-4 py-3 text-left font-medium text-muted-foreground">Voter Name</th>
               <th className="px-4 py-3 text-left font-medium text-muted-foreground">Brought Candy</th>
@@ -192,6 +195,16 @@ export default function AdminVotesTable({ votes, onVotesChange }: AdminVotesTabl
                 className="border-t hover:bg-muted/30 transition-colors"
               >
                 <td className="px-4 py-3 text-muted-foreground">{vote.id}</td>
+                <td className="px-4 py-3">
+                  <div className="relative h-10 w-10 overflow-hidden rounded-full border border-white/20">
+                    <Image
+                      src={getAvatarUrl(vote.voter_name)}
+                      alt={vote.voter_name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </td>
                 <td className="px-4 py-3 text-muted-foreground text-xs">
                   {formatDate(vote.created_at)}
                 </td>

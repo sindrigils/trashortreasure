@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseClient, Vote } from '@/lib/supabase';
 import { normalizeCandyName, getMostCommonSpelling } from '@/lib/candy';
+import { getAvatarUrl } from '@/lib/getAvatarUrl';
 
 interface CandyStats {
   candy: string;
@@ -11,6 +12,7 @@ interface CandyStats {
 
 interface PersonStats {
   name: string;
+  avatar_url?: string;
   hate_vote: string;
   love_vote: string;
   spicy_score: number;
@@ -20,6 +22,7 @@ interface PersonStats {
 interface Award {
   candy?: string;
   name?: string;
+  avatar_url?: string;
   hate_vote?: string;
   love_vote?: string;
   likes?: number;
@@ -131,6 +134,7 @@ export async function GET() {
 
       return {
         name: vote.voter_name,
+        avatar_url: getAvatarUrl(vote.voter_name),
         hate_vote: vote.hate_vote,
         love_vote: vote.love_vote,
         spicy_score: slugToLikes.get(hateSlug) || 0, // How many people loved what they hated
@@ -166,6 +170,7 @@ export async function GET() {
       .filter((p) => p.spicy_score === maxSpicyScore && maxSpicyScore > 0)
       .map((p) => ({
         name: p.name,
+        avatar_url: p.avatar_url,
         hate_vote: p.hate_vote,
         spicy_score: p.spicy_score,
       }));
@@ -174,6 +179,7 @@ export async function GET() {
       .filter((p) => p.pure_score === maxPureScore && maxPureScore > 0)
       .map((p) => ({
         name: p.name,
+        avatar_url: p.avatar_url,
         love_vote: p.love_vote,
         pure_score: p.pure_score,
       }));

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { ArrowLeft, BarChart3 } from 'lucide-react';
+import { ArrowLeft, BarChart3, Users } from 'lucide-react';
 import { Vote } from '@/lib/supabase';
 import StatsCards from '@/components/admin/StatsCards';
 import AdminVotesTable from '@/components/admin/AdminVotesTable';
@@ -89,16 +89,28 @@ export default function AdminPage() {
                 Manage candy submissions, monitor the dashboard, and keep the showdown balanced.
               </p>
             </div>
-            <Button
-              asChild
-              variant="ghost"
-              className="gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-white hover:bg-white/10"
-            >
-              <Link href="/results">
-                View live board
-                <BarChart3 className="h-4 w-4" />
-              </Link>
-            </Button>
+            <div className="flex gap-3">
+              <Button
+                asChild
+                variant="ghost"
+                className="gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-white hover:bg-white/10"
+              >
+                <Link href="/admin/voters">
+                  Voter Status
+                  <Users className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="ghost"
+                className="gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-white hover:bg-white/10"
+              >
+                <Link href="/results">
+                  View live board
+                  <BarChart3 className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </header>
 

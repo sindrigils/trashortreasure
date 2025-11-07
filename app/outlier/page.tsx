@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Heart, RefreshCcw, Sparkles } from 'lucide-react';
 import { useStats } from '@/hooks/useStats';
 import { Button } from '@/components/ui/button';
@@ -73,11 +74,23 @@ export default function OutlierPage() {
         {headliner ? (
           <Card className="overflow-hidden border-white/10 bg-gradient-to-br from-fuchsia-500/20 via-fuchsia-500/10 to-transparent backdrop-blur shadow-xl shadow-fuchsia-900/30">
             <CardHeader className="flex flex-col gap-4 pb-0 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-3">
-                <Badge className="border-white/20 bg-black/40 text-xs uppercase tracking-widest text-fuchsia-200">
-                  Spotlight
-                </Badge>
-                <CardTitle className="text-3xl text-white">{headliner.name}</CardTitle>
+              <div className="flex items-center gap-4">
+                {headliner.avatar_url && (
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 border-fuchsia-400/50">
+                    <Image
+                      src={headliner.avatar_url}
+                      alt={headliner.name || 'Voter'}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <div className="flex flex-col gap-2">
+                  <Badge className="border-white/20 bg-black/40 text-xs uppercase tracking-widest text-fuchsia-200 w-fit">
+                    Spotlight
+                  </Badge>
+                  <CardTitle className="text-3xl text-white">{headliner.name}</CardTitle>
+                </div>
               </div>
               <Badge className="border-white/10 bg-white/10 px-3 py-1 text-sm font-semibold text-white">
                 Outlier Score {formatScore(headliner.pure_score)}
@@ -147,9 +160,21 @@ export default function OutlierPage() {
                     className="border-white/10 bg-white/5 backdrop-blur-sm shadow-lg shadow-black/30"
                   >
                     <CardContent className="space-y-4 p-6">
-                      <div className="flex items-center justify-between">
-                        <p className="text-xl font-semibold text-white">{entry.name}</p>
-                        <Badge className="border-white/10 bg-white/10 px-2 py-0.5 text-xs text-fuchsia-200">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          {entry.avatar_url && (
+                            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 border-white/20">
+                              <Image
+                                src={entry.avatar_url}
+                                alt={entry.name || 'Voter'}
+                                fill
+                                className="object-cover"
+                              />
+                            </div>
+                          )}
+                          <p className="text-xl font-semibold text-white">{entry.name}</p>
+                        </div>
+                        <Badge className="border-white/10 bg-white/10 px-2 py-0.5 text-xs text-fuchsia-200 shrink-0">
                           {formatScore(entry.pure_score)}
                         </Badge>
                       </div>

@@ -1,6 +1,7 @@
 export interface AwardEntry {
   candy?: string;
   name?: string;
+  avatar_url?: string;
   hate_vote?: string;
   love_vote?: string;
   likes?: number;
@@ -25,6 +26,7 @@ export interface StatsData {
   }>;
   perPerson: Array<{
     name: string;
+    avatar_url?: string;
     hate_vote: string;
     love_vote: string;
     spicy_score: number;
